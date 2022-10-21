@@ -10,6 +10,7 @@ run:
 	-v $(ROOT_DIR)/slides:/slides \
 	docker.io/webpronl/reveal-md:latest /slides \
 	--css css/style.css \
+	 --highlight-theme github \
 	--watch
 
 sharescreen:

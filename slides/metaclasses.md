@@ -2,8 +2,9 @@
 # title: Foobar
 # separator: <!--s-->
 # verticalSeparator: <!--v-->
-theme: moon
+theme: solarized
 # revealOptions:
+#   highlight-theme: github
 #   transition: 'fade'
 ---
 
@@ -33,7 +34,7 @@ Lançar Remote Desktop Viewer
 
 ![Capa Fluent Python 2ª Ed.](img/fluent-python.png)
 
-Nota:
+Note:
 
 Trabalho com Python a 21 anos.
 
@@ -61,18 +62,27 @@ para fazer algo especial com uma instância da sua classe.
 
 ---
 
-![Tabela de métodos especiais 1](img/special-methods-noop-1.png)
-![Tabela de métodos especiais 2](img/special-methods-noop-2.png)
+![Tabela de métodos especiais 1](img/special-methods-noop.png)
+
+Note:
+
+Fonte: Fluent Python Second Edition
 
 ---
 
 ![Tabela de métodos especiais 3](img/special-methods-operators.png)
+
+Note:
+
+Fonte: Fluent Python Second Edition
 
 ---
 
 ![Sequência de busca de atributos](img/method-resolution-order.png)
 
 Note:
+
+[Source](https://excalidraw.com/#room=1c8d72d1ecb12684899d,44bhxgUJPAwiO3oXuNRoJw)
 
 Mostrar `slides/code/slide0_methods.py`
 
@@ -106,19 +116,17 @@ m2(7)
 
 (e atributos normais)
 
-* instância
-* classe
-* superclasses
-
-Note
+1. instância
+2. classe
+3. superclasses
 
 ---
 
 ## Sequência de busca: métodos especiais
 
-* **~instância~ NÃO**!
-* classe
-* superclasses
+1. **~instância~ NÃO**!
+2. classe
+3. superclasses
 
 ---
 
@@ -139,7 +147,7 @@ Demonstrar com prints por todos os lados:
 
 ---
 
-## Tudo é objeto (1/3)
+## Tudo é objeto (1)
 
 ![Labels, not Boxes](img/labels-not-boxes.png)
 <font size="1">
@@ -178,27 +186,7 @@ MinhaClasse = None
 instancia = MinhaClasse()
 ```
 
-Posso colocar classes em listas:
-
-```text
-minhas_classes = [MinhaClasse2, MinhaSubClasse]
-
-instancia3 = minhas_classes[0]()
-
-instancia3.dobrar()
-```
-
-Ou colocá-las em dicionários:
-
-```text
-meu_mapa_de_classes = {
-    'classe_a': MinhaClasse2,
-    'classe_b': slide1_runtime.Pato,
-}
-
-pato2 = meu_mapa_de_classes['classe_b']()
-pato2.quack()
-```
+Posso colocar classes em listas, ou colocá-las em dicionários
 
 Inclusive, o conteúdo de módulos importados fica em um dicionário:
 
@@ -208,7 +196,12 @@ slide1_runtime.__dict__.keys()
 {key: value for key, value in slide1_runtime.__dict__.items() if not key.startswith('__')}
 ```
 
-Assim como o conteúdo de classes e instâncias
+Assim como o conteúdo de classes e instâncias:
+
+```python
+m1.__dict__
+MinhaSubClasse.__dict__
+```
 
 Como meu amigo Lalo Martins diria:
 
@@ -239,7 +232,7 @@ E também é possível criar funções dentro de funções.
 
 ---
 
-## Tudo é objeto (2/3)
+## Tudo é objeto (2)
 
 Todos os valores têm uma classe
 
@@ -261,7 +254,7 @@ pato.__class__ is slide1_runtime.Pato
 
 ---
 
-## Tudo é objeto (3/3)
+## Tudo é objeto (3)
 
 * Criando classes dinamicamente
 
@@ -322,17 +315,21 @@ Note:
 
 ## Metaclasse: a classe da classe
 
-* `type`: a classe das classes
+* `type`: a classe das classes por padrão
   * 1 parâmetro: retorna a classe de um objeto
   * 3 parâmetros: cria uma nova classe
 
 Note:
 
-Classes são resultado da invocação de uma metaclasse, assim como uma instância é resultado da invocação de uma classe.
+Metaclasse é o nome que damos à classe de uma classe
+
+E `type` é a metaclasse padrão de todas as classes
 
 ---
 
-## `type` e `object` uma relação especial
+## "`type`" & "`object`"
+
+uma relação peculiar
 
 ![Relações entre type e object](img/object-type-relationship.png)
 
@@ -342,8 +339,8 @@ Note:
 
 Mas se `type` é uma (meta)classe, de quem ela é subclasse?
 
-E se `object` é uma classe de quem as outras classes herdam,
-de quem ele é instância?
+E se `object`, que é uma classe, também é uma instância, quem é a classe de
+`object`?
 
 ```text
 >>> type(object)
@@ -358,6 +355,10 @@ de quem ele é instância?
 ()
 ```
 
+**A relação entre `object` e `type` não pode ser construída em Python.**
+
+Faz parte da definição da linguagem.
+
 ---
 
 ## Criando novas metaclasses
@@ -371,6 +372,8 @@ class better_repr_type(type):
 
 Note:
 
+Se `type` é uma classe, posso herdar de `type`?
+
 `slides/code/slide9_better_repr.py`
 
 ```text
@@ -383,6 +386,14 @@ MinhaSubClasseComRepr = better_repr_type(
     {'__init__': __init__},   # atributos / métodos
 )
 ```
+
+---
+
+![Relações de classe com metaclasse](img/class-relationships-2.png)
+
+Note:
+
+[Source](https://excalidraw.com/#room=1076797d69bd2c569513,l33QvHS3xBgAcPXs-WptjA)
 
 ---
 
@@ -403,125 +414,60 @@ class MinhaSubClasseComRepr2(MinhaClasse, metaclass=better_repr_type):
 
 ---
 
-## MRO: Por onde atributos fluem?
+## Mas pra que servem afinal? (1)
 
-* Atributos normais: `obj.atrib` ou `obj.metodo()`
-* Em instâncias:
-  * instância
-  * classe
-  * superclasses
-* Em classes
-  * Da classe pras superclasses
-* **Metaclasses não entram na brincadeira**!
-
-Note:
-
-Para atributos/métodos normais, sendo acessados via `obj.attr()`, essa é a
-ordem.
-
-```text
-MinhaSubClasseComRepr2.__mro__
-```
-
----
-
-## Métodos especiais (`__repr__` ...)
-
-* Em instâncias:
-  * classe
-  * superclasses
-  * **NÃO na ~instância~**!
-* Em classes
-  * apenas na metaclasse
-    * (e superclasses da metaclasse)
-
-Note:
-
-Para métodos especiais, quando o Python usa sua instância para operações
-especiais, como indexação, uso com operadores, etc. a busca é assim.
-
----
-
-## "Walk-thru"
-
-Note:
-
-10 min.
-
-Walkthru completo do processo de declaração de uma classe
-
-Elaborar uma metaclasse com prints nos métodos especiais:
-
-Debugar passo a passo no vs.code
-
----
-
-## Mas pra que servem afinal? (1/3)
-
-* Métodos especiais para classes!
-
-* Registrar/Interceptar/customizar criação de classes
-  * `__new__` / `__init__`
-* Manipular métodos e atributos da classe durante criação
-
-Note:
-
-Relembrar walkthru
-
----
-
-## Mas pra que servem afinal? (2/3)
-
-* Interceptar/customizar criação de instâncias
-  * `__call__`
-    * Mas redundante com `__new__` da classe
-
-Note:
-
-Sobrescrever o `__call__` da metaclasse pra retornar `None`.
-
----
-
-## Mas pra que servem afinal? (3/3)
-
-* Dar efeitos especiais às classes
+* Dar métodos especiais às classes
   * `__repr__`
   * `__getitem__`
   * `__(...)__`
 
+---
+
+## Mas pra que servem afinal? (2)
+
+* Preparar o `namespace` de uma classe
+* Interceptar/registrar/customizar criação de classes
+* Manipular métodos e atributos da classe durante criação
+* Interceptar/customizar criação de instâncias
+
 Note:
 
-Mencionar como typing já usa essas definições em list.
+`slides/code/slide12_walkthru.py`
+
+Walkthru completo do processo de declaração de uma classe
+
+Debugar passo a passo no vs.code
+
+Sobrescrever o `__call__` da metaclasse pra retornar `None`.
+
+* Interceptar/customizar criação de instâncias
+  * `__call__`
+    * Redundante com `__new__` da classe
 
 ---
 
-## Pra que não servem?
+## Pra que NÃO servem?
 
-* Não influenciam instâncias já criadas.
-* Não dão atributos ou métodos novos para classes
+* Influenciar instâncias depois de criadas
+* Fornecer atributos ou métodos **normais** às classes
+  * apenas métodos especiais!
 
 Note:
 
-Exceto na criação (`__call__`), como mencionamos antes.
-
-Falar sobre `__mro__`.
+MRO de atributos normais nunca passa pela metaclasse.
 
 ---
 
-## Você (provavelmente) nunca vai precisar de meta-classes (1/2)
+## Você (provavelmente) nunca vai precisar de metaclasses (1)
 
-* `__init_subclass__`
+* `SuperClass.__init_subclass__()`
   * Invocado a cada subclasse declarada
     * Mesmo nas subclasses indiretas
   * Mas não na classe onde é declarada
 
-Note:
-
-Mostrar `slides/code/slide20_init_subclass.py`
-
 ---
 
-## Você (provavelmente) nunca vai precisar de meta-classes (2/2)
+## Você (provavelmente) nunca vai precisar de metaclasses (2)
 
 Decoradores:
 
@@ -536,7 +482,40 @@ class MinhaClasse:
 
 Note:
 
-Debugar `slides/code/slide22_decorator.py`
+`@dataclass` cria métodos nas suas classes
+
+---
+
+## Você (provavelmente) nunca vai precisar de metaclasses (3)
+
+* `__class_getitem__`
+  * Usado pelo Python para *type hints*
+
+```python
+def print_steps(list[str]): ...
+```
+
+Note:
+
+Mostrar `slides/code/slide20_meta_alternatives.py`
+
+```python
+from slide20_meta_alternatives import *
+
+Anseriforme['Pato']
+
+@verifica_anseriforme
+class Cachorro(Pato):
+    def quack(self):
+        print("au, au!")
+
+class Gato(Pato):
+    def quack(self):
+        print("miau!")
+
+Anseriforme['Cachorro']
+
+```
 
 ---
 
@@ -550,12 +529,30 @@ class MinhaSubClasse(SuperCls, palavra='Chave', numero=42):
 * Mas é necessário consumi-las:
   * Onde:
     * `MetaClass.__new__()`
-    * `Class.__init_subclass__()`
+    * `SuperClass.__init_subclass__()`
   * Pois `object.__init_subclass__()` não as aceita.
 
 Note:
 
-Devem ser consumidas no `__new__`, ou no `__init_subclass__`.
+E já que estamos falando de customização de classes, uma coisa interessante é
+que classes aceitam *keyword arguments* além de `metaclasse=`
+
+Devem ser consumidas no `__new__` da metaclasse, ou no `__init_subclass__` de
+uma classe mãe.
+
+
+Debugar `slides/code/slide12_walkthru.py` para o código:
+
+```python
+class Cisne(metaclass=MetaAnseriforme):
+
+    def __init_subclass__(subclass, **kw):
+      print("consumindo", kw)
+      super().__init_subclass__(subclass)
+
+class CisneNegro(Cisne, palavra="chave"):
+    pass
+```
 
 ---
 
@@ -585,23 +582,46 @@ Mas subclasses de uma tal classe podem declarar `table`.
 ## Resumindo
 
 * Tudo tem classes, inclusive as classes
-* Metaclasses dão efeitos especiais para classes
-  * métodos `__*__`
-* Metaclasses não tem nenhuma influência sobre instâncias da classe
+* Metaclasses fornecem métodos especiais para classes
+  * E apenas métodos especiais
+* Metaclasses não têm nenhuma influência sobre instâncias da classe
   * busca de métodos/atributos não flui pra metaclasse
 * Você pode criar (meta)classes pras suas classes
   * Mas provavelmente não precisa
 
 Note:
 
+Python é uma linguagem muito classuda! Tudo tem classe!
+
+Metaclasses ajudam a linguagem a evoluir (`__init_subclass__`, `__class_getitem__`).
+
+Metaclasse é pra quem está fazendo frameworks, como SQLAlchemy.
+
+Se você se pergunta se precisa usar metaclasses, certeza que não precisa ;-)
+
+Quem precisa sabe exatamente porqueê precisa.
+
 ---
 
 ## Perguntas?
+
+----
+
+```python
+class SaborDeSorvete(AutoString):
+    creme
+    morango
+    chocolate
+```
 
 ---
 
 ## Obrigado!
 
 https://www.linkedin.com/in/leorochael/
+
+Telegram: `@LeoRochael`
+
+email: `leorochael@gmail.com`
 
 PS: Pessoa Dev. Sr. ou Data Eng. Sr. que quer trabalhar em Berlin, fale comigo!

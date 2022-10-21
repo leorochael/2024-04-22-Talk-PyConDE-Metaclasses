@@ -14,9 +14,9 @@ class MetaAnseriforme(type):
         print(f'*** __init__ da metaclasse')
         super().__init__(cls_name, bases, cls_dict, **kw)
 
-    def __repr__(cls):  # <8>
+    def __repr__(cls):
         cls_name = cls.__name__
-        return f"classe {cls_name!r} com repr MetaAnseriforme"
+        return f"<Classe para fazer {cls_name!r}>"
 
     print('*** Fim da metaclasse')
 

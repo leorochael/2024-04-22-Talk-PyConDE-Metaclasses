@@ -1,11 +1,31 @@
-print('*** Início do módulo')
+print('* Início do módulo')
+
+from collections import UserDict
+
+class LogDict(UserDict):
+    def __setitem__(self, key, item):
+        print("*** novo atributo", key)
+        return super().__setitem__(key, item)
+
 
 class MetaAnseriforme(type):
-    print('*** Início da metaclasse')
+    print('** Início da metaclasse')
+
+    @classmethod
+    def __prepare__(metacls, cls_name, cls_bases, **kw):
+        print("*** preparando o namespace da classe")
+
+        def debug(msg):
+            print(f"** na classe:", cls_name, "mensagem:", msg)
+
+        cls_dict = LogDict({'debug': debug})
+        return cls_dict
 
     def __new__(meta_cls, cls_name, bases, cls_dict, **kw):
         print(f'*** __new__ da metaclasse')
 
+        cls_dict = dict(cls_dict)
+        del cls_dict['debug']
         cls = super().__new__(meta_cls, cls_name, bases, cls_dict, **kw)
 
         return cls
@@ -18,22 +38,23 @@ class MetaAnseriforme(type):
         print('*** __call__ da metaclasse')
         return super().__call__()
 
-    def __repr__(cls):  # <8>
+    def __repr__(cls):
         cls_name = cls.__name__
-        return f"classe {cls_name!r} com repr MetaAnseriforme"
+        return f"<Classe {cls_name!r} com repr MetaAnseriforme>"
 
-    print('*** Fim da metaclasse')
+    print('** Fim da metaclasse')
 
 
-print('*** Entre metaclasse e classe')
+print('* Entre metaclasse e classe')
+
 
 class Pato(metaclass=MetaAnseriforme):
 
-    print("*** No começo da declaração da classe")
+    debug("No começo da declaração da classe")
 
-    def __new__(self):
+    def __new__(cls):
         print("*** Durante o __new__ da classe")
-        return super().__new__()
+        return super().__new__(cls)
 
     def __init__(self):
         print("*** Durante o init da classe")
@@ -41,10 +62,21 @@ class Pato(metaclass=MetaAnseriforme):
     def quack(self):
         print("Quack!")
 
-    print("*** No fim da declaração da classe")
+    debug("No fim da declaração da classe")
 
-print('*** Entre classe e instância')
+
+print('* Entre classe e subclasse')
+
+
+class PatoMandarim(Pato):
+
+    debug("declarando a subclasse")
+
+    def quack(self):
+        print("Qué!")
+
+    debug("fim da declaração da subclasse")
 
 pato = Pato()
 
-print('*** Fim do módulo')
+print('* Fim do módulo')
