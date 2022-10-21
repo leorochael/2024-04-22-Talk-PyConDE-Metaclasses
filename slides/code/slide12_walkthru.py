@@ -1,4 +1,4 @@
-print('* Início do módulo')
+print('* Início do módulo {__name__}')
 
 from collections import UserDict
 
@@ -77,6 +77,9 @@ class PatoMandarim(Pato):
 
     debug("fim da declaração da subclasse")
 
+
+print('* Entre subclasse e instância')
+
 pato = Pato()
 
-print('* Fim do módulo')
+print(f'* Fim do módulo {__name__}')

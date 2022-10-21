@@ -4,7 +4,6 @@
 # verticalSeparator: <!--v-->
 theme: solarized
 # revealOptions:
-#   highlight-theme: github
 #   transition: 'fade'
 ---
 
@@ -116,17 +115,19 @@ m2(7)
 
 (e atributos normais)
 
-1. instância
-2. classe
-3. superclasses
+0. instância
+1. classe
+2. superclasses
 
 ---
 
 ## Sequência de busca: métodos especiais
 
-1. **~instância~ NÃO**!
-2. classe
-3. superclasses
+(métodos "dunder": `__...__`)
+
+0. **~instância~ NÃO**!
+1. classe
+2. superclasses
 
 ---
 
@@ -150,8 +151,9 @@ Demonstrar com prints por todos os lados:
 ## Tudo é objeto (1)
 
 ![Labels, not Boxes](img/labels-not-boxes.png)
+
 <font size="1">
-Imagem © Luciano Ramalho, usadas com permissão
+Imagem © Luciano Ramalho, usada com permissão
 </font>
 
 Classes são valores também!
@@ -425,7 +427,7 @@ class MinhaSubClasseComRepr2(MinhaClasse, metaclass=better_repr_type):
 
 ## Mas pra que servem afinal? (2)
 
-* Preparar o `namespace` de uma classe
+* Preparar o `namespace` (`.__dict__`) de uma classe
 * Interceptar/registrar/customizar criação de classes
 * Manipular métodos e atributos da classe durante criação
 * Interceptar/customizar criação de instâncias
@@ -482,7 +484,10 @@ class MinhaClasse:
 
 Note:
 
-`@dataclass` cria métodos nas suas classes
+Um decorador recebe a classe já pronta, e têm a oportunidade de modificá-la, e
+até substituí-la, antes de retorná-la.
+
+Um bom exemplo existente é `@dataclass`, que cria métodos nas suas classes.
 
 ---
 
@@ -540,19 +545,8 @@ que classes aceitam *keyword arguments* além de `metaclasse=`
 Devem ser consumidas no `__new__` da metaclasse, ou no `__init_subclass__` de
 uma classe mãe.
 
-
-Debugar `slides/code/slide12_walkthru.py` para o código:
-
-```python
-class Cisne(metaclass=MetaAnseriforme):
-
-    def __init_subclass__(subclass, **kw):
-      print("consumindo", kw)
-      super().__init_subclass__(subclass)
-
-class CisneNegro(Cisne, palavra="chave"):
-    pass
-```
+Abrir `slides/code/slide12_walkthru.py` ao lado de
+`slides/code/slide23_keywords.py` e debugar.
 
 ---
 
@@ -591,15 +585,17 @@ Mas subclasses de uma tal classe podem declarar `table`.
 
 Note:
 
-Python é uma linguagem muito classuda! Tudo tem classe!
+Tem gente que acha que Python é uma linguagem objetificante... Tudo é objeto!
+
+Eu prefiro pensar que Python é uma linguagem muito classuda! Tudo tem muita classe!
 
 Metaclasses ajudam a linguagem a evoluir (`__init_subclass__`, `__class_getitem__`).
 
-Metaclasse é pra quem está fazendo frameworks, como SQLAlchemy.
+Metaclasse é pra quem está fazendo frameworks, como SQLAlchemy ou Pydantic.
 
 Se você se pergunta se precisa usar metaclasses, certeza que não precisa ;-)
 
-Quem precisa sabe exatamente porqueê precisa.
+Quem precisa sabe exatamente porque precisa.
 
 ---
 
@@ -608,6 +604,8 @@ Quem precisa sabe exatamente porqueê precisa.
 ----
 
 ```python
+from autostring import AutoString
+
 class SaborDeSorvete(AutoString):
     creme
     morango
