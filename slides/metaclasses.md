@@ -61,19 +61,30 @@ para fazer algo especial com uma instância da sua classe.
 
 ---
 
-![Tabela de métodos especiais 1](img/special-methods-noop.png)
+![Tabela de métodos especiais para operações matemáticas](img/special-methods-operators.png)
 
 Note:
 
 Fonte: Fluent Python Second Edition
+
+Por exemplo, esses são todos os métodos especiais que, se a sua classe
+implementar, permitem que a instância da classe participe de operações com
+operadores matemáticos, mais, vezes, etc.
 
 ---
 
-![Tabela de métodos especiais 3](img/special-methods-operators.png)
+![Tabela de métodos especiais exceto para operações matemáticas](img/special-methods-noop.png)
 
 Note:
 
 Fonte: Fluent Python Second Edition
+
+Já esses métodos especiais são todos os outros que não tem a ver com
+participar de operações.
+
+Tem métodos especiais para sua classe ser chamada como se fosse uma função,
+indexada como se fosse uma lista ou dicionário, fornecer um comprimento com
+`len()`, etc.
 
 ---
 
