@@ -35,7 +35,7 @@ Lançar Remote Desktop Viewer
 
 Note:
 
-Trabalho com Python a 21 anos.
+Trabalho com Python há 21 anos.
 
 Meu primeiro emprego com Python foi tendo o Luciano Ramalho como chefe.
 
@@ -67,8 +67,8 @@ Note:
 
 Fonte: Fluent Python Second Edition
 
-Por exemplo, esses são todos os métodos especiais que, se a sua classe
-implementar, permitem que a instância da classe participe de operações com
+Por exemplo, esses são todos os métodos especiais que sua classe pode
+implementar, e permitem que a instância da classe participe de operações com
 operadores matemáticos, mais, vezes, etc.
 
 ---
@@ -84,7 +84,7 @@ participar de operações.
 
 Tem métodos especiais para sua classe ser chamada como se fosse uma função,
 indexada como se fosse uma lista ou dicionário, fornecer um comprimento com
-`len()`, etc.
+`len()`, especificar sua representação no console etc.
 
 ---
 
@@ -626,6 +626,8 @@ class SaborDeSorvete(AutoString):
 ---
 
 ## Obrigado!
+
+GH: [leorochael/2022-10-23-Talk-PythonBrasil-Metaclasses](https://github.com/leorochael/2022-10-23-Talk-PythonBrasil-Metaclasses)
 
 https://www.linkedin.com/in/leorochael/
 

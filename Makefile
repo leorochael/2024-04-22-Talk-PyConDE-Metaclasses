@@ -1,4 +1,4 @@
-DOCKER=podman
+DOCKER ?= podman
 #DOCKER=docker
 #DOCKER=sudo docker
 
