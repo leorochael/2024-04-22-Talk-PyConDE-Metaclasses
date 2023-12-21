@@ -6,3 +6,12 @@
 .reveal h6 {
   text-transform: none;
 }
+
+p:has(> img[src*="#img-float-right"]) {
+  float: right;    
+  margin: 0 0 0 15px;
+}
+
+section:has(> h2#obrigado) p {
+  text-align: left;    
+}
