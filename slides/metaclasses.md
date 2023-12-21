@@ -1,5 +1,5 @@
 ---
-# title: Foobar
+# title: Metaclasses
 # separator: <!--s-->
 # verticalSeparator: <!--v-->
 theme: solarized
@@ -508,7 +508,7 @@ Um bom exemplo existente é `@dataclass`, que cria métodos nas suas classes.
   * Usado pelo Python para *type hints*
 
 ```python
-def print_steps(list[str]): ...
+def print_steps(steps: list[str]): ...
 ```
 
 Note:
@@ -629,10 +629,14 @@ class SaborDeSorvete(AutoString):
 
 GH: [leorochael/2022-10-23-Talk-PythonBrasil-Metaclasses](https://github.com/leorochael/2022-10-23-Talk-PythonBrasil-Metaclasses)
 
+![QR Code para a URL do github desta palestra](img/github-talk-qrcode.png#img-float-right)
+
 https://www.linkedin.com/in/leorochael/
 
 Telegram: `@LeoRochael`
 
 email: `leorochael@gmail.com`
 
-PS: Pessoa Dev. Sr. ou Data Eng. Sr. que quer trabalhar em Berlin, fale comigo!
+<font size="4" style="text-align: left">
+PS: Quer trabalhar em Berlin? Fale comigo! Pessoa Dev. Sr. ou Data Eng. Sr. q
+</font>

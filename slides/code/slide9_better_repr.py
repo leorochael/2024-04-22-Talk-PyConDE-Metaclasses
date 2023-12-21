@@ -2,7 +2,7 @@ class better_repr_type(type):
 
     def __init__(cls, name, bases, namespace_dict):
 
-        # self is a new class
+        # cls above é uma nova classe
 
         def __repr__(self):
             attr_repr = ', '.join(
