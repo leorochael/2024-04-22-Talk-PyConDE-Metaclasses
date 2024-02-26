@@ -14,7 +14,3 @@ class MinhaSubClasse(MinhaClasse):
     def __repr__(self):
         return f'<MinhaSubClasse x={self.x}>'
 
-
-m1 = MinhaClasse()
-
-m2 = MinhaSubClasse()

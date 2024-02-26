@@ -47,10 +47,12 @@ E fui vítima da maldição do conhecimento.
 
 ## Mas primeiro: dois tipos de métodos
 
-* Métodos (e atributos) normais:
-  * `objeto.metodo()`
+* Métodos normais:
+  * Como declarar: `def metodo(self):`
+  * Como usar: `objeto.metodo()`
 * Métodos especiais
-  * ex: `def __bool__(self): ...`
+  * Como declarar: `def __str__(self):`
+  * Como usar: `print(objeto)`
 
 Note:
 
@@ -99,6 +101,12 @@ Mostrar `slides/code/slide0_methods.py`
 ```text
 from slide0_methods import *
 
+
+m1 = MinhaClasse()
+
+m2 = MinhaSubClasse()
+
+
 m1.dobrar()
 
 m1.x = 7
@@ -136,7 +144,7 @@ m2(7)
 
 (métodos "dunder": `__...__`)
 
-0. **~instância~ NÃO**!
+0. ~~instância~~ **NÃO**!
 1. classe
 2. superclasses
 
